@@ -45,7 +45,7 @@ export const Navbar = () => {
             <S.Container>
             <S.Info>
             <S.StyledMenuIcon fontSize="large" onClick={() => setOpenDrawer(true)}/>
-                <h2>Área Restrita</h2>
+                <h2>Ambiféricos</h2>
             
                 <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title={localStorage.getItem('username')}>
