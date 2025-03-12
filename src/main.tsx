@@ -1,20 +1,34 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './global.css'
-import { SnackbarProvider } from 'notistack'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Navbar } from './components/Navbar'
-import { Login } from './Pages/Login'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./global.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { SnackbarProvider } from "notistack";
+import { Navbar } from "./components/Navbar";
+import { Login } from "./Pages/Login";
+import { Home } from "./Pages/Home";
+import { MainPage } from "./Pages/MainPage";
 
-createRoot(document.getElementById('root')!).render(
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainPage />,
+    // errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    // errorElement: <ErrorPage />,
+    element: <Login />,
+  },
+]);
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-    <SnackbarProvider>
-      <Routes> 
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </SnackbarProvider>
-    <Navbar />
-    </BrowserRouter>
-  </StrictMode>,
-)
+    <RouterProvider router={router} />
+  </StrictMode>
+);
