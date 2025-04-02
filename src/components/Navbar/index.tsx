@@ -13,9 +13,6 @@ export const Navbar = () => {
 
     const MenuOptions = [
         {name: 'Home', path: '/'},
-        {name: 'Dashboard', path: '/admin/dashboard'},
-        {name: 'Formulário', path: '/admin/formulario'},
-        {name: 'Avalição do Projeto', path: '/admin/avaliacao-projeto'},
     ]
     const userMenu = ['Logout'];
 
@@ -100,7 +97,7 @@ export const Navbar = () => {
                     <S.MenuName>Menu</S.MenuName>
                     <List>
                         {MenuOptions.map((item) => (
-                            <ListItem key={item.name} disablePadding>
+                            <ListItem key={item.name}>
                                  <ListItemButton
                                     divider
                                     onClick={() => {

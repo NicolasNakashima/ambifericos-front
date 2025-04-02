@@ -10,6 +10,7 @@ export const Home = () => {
     image:
       "https://i.pinimg.com/736x/13/2c/ca/132ccab00cbe2774aa975c147c584aa8.jpg",
   }));
+
   return (
     <S.Wrapper>
       <S.RecomendedContainer>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./global.css";
@@ -6,6 +7,7 @@ import { Login } from "./Pages/Login";
 import { Home } from "./Pages/Home";
 import { MainPage } from "./Pages/MainPage";
 import { ShoppingKart } from "./Pages/ShoppingKart";
+import { SnackbarProvider } from "notistack";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    <SnackbarProvider>
+
     <RouterProvider router={router} />
+    </SnackbarProvider>
   </StrictMode>
 );
