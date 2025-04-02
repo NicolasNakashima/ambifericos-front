@@ -1,6 +1,6 @@
 import * as S from "./style";
 
-interface IProductCard {
+interface IProductCardKart {
   pk_id: number;
   name: string;
   description: string;
@@ -9,14 +9,14 @@ interface IProductCard {
   onClick: (data: { pk_id: number }) => void;
 }
 
-export default function ProductCard({
+export default function ProductCardKart({
   pk_id,
   description,
   image,
   name,
   price,
   onClick,
-}: IProductCard) {
+}: IProductCardKart) {
   return (
     <S.Card onClick={() => onClick({ pk_id })}>
       <S.ImageCard src={image} />

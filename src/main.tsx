@@ -2,11 +2,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./global.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { SnackbarProvider } from "notistack";
-import { Navbar } from "./components/Navbar";
 import { Login } from "./Pages/Login";
 import { Home } from "./Pages/Home";
 import { MainPage } from "./Pages/MainPage";
+import { ShoppingKart } from "./Pages/ShoppingKart";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/carrinho",
+        element: <ShoppingKart />,
       },
     ],
   },

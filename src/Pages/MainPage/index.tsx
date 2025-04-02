@@ -1,4 +1,4 @@
-import * as S from "./style";
+import * as S from "./styles";
 import { Navbar } from "../../components/Navbar";
 import { Outlet } from "react-router-dom";
 

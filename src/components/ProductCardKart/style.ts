@@ -2,10 +2,9 @@ import styled, { css } from "styled-components";
 
 export const Card = styled.div(
   () => css`
-    width: 200px;
-    height: 300px;
+    width: 100%;
+    height: 150px;
     display: flex;
-    flex-direction: column;
     border-radius: 1rem;
     overflow: hidden;
     cursor: pointer;
@@ -14,8 +13,7 @@ export const Card = styled.div(
 
 export const ImageCard = styled.img(
   () => css`
-    width: 100%;
-    height: 45%;
+    width: 30%;
   `
 );
 

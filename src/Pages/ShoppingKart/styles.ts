@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import styled, { css } from "styled-components";
 
 export const Wrapper = styled.div(
@@ -9,14 +8,15 @@ export const Wrapper = styled.div(
     padding: 0 3rem;
     margin-top: 150px;
     margin-bottom: 48px;
+    width: 100%;
   `
 );
 
-export const RecomendedContainer = styled.div(
+export const ContainerProductsKart = styled.div(
   () => css`
     display: flex;
+    flex-direction: column;
     width: 100%;
     gap: 3rem;
-    flex-wrap: wrap;
   `
 );
