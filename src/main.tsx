@@ -35,7 +35,6 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <SnackbarProvider>
-
     <RouterProvider router={router} />
     </SnackbarProvider>
   </StrictMode>

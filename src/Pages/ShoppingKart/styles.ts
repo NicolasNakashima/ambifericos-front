@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import styled, { css } from "styled-components";
 
 export const Wrapper = styled.div(
@@ -20,3 +21,12 @@ export const ContainerProductsKart = styled.div(
     gap: 3rem;
   `
 );
+
+export const StyledButton = styled(Button)(
+  () => css`
+  padding: 10px;
+  
+  `
+)
+
+

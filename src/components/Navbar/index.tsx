@@ -13,6 +13,7 @@ export const Navbar = () => {
 
     const MenuOptions = [
         {name: 'Home', path: '/'},
+        {name: 'Carrinho', path: '/carrinho'},
     ]
     const userMenu = ['Logout'];
 

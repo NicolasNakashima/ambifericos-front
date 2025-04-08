@@ -22,10 +22,11 @@ export const CardInformations = styled.div(
     width: 100%;
     height: 100%;
     display: flex;
-    background-color: #fbff6e;
     flex-direction: column;
     padding: 8px;
     gap: 1rem;
+    background-color: wheat;
+    border: 1px solid lightgray;
   `
 );
 

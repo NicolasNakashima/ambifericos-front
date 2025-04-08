@@ -1,8 +1,9 @@
+import { enqueueSnackbar } from "notistack";
 import ProductCardKart from "../../components/ProductCardKart";
 import * as S from "./styles";
 
 export const ShoppingKart = () => {
-  const mockData = Array.from({ length: 6 }, (_, i) => ({
+  const mockData = Array.from({ length: 3 }, (_, i) => ({
     pk_id: i + 1,
     name: `Ambi ${i + 1}`,
     price: 2 * i,
@@ -10,11 +11,13 @@ export const ShoppingKart = () => {
     image:
       "https://i.pinimg.com/736x/13/2c/ca/132ccab00cbe2774aa975c147c584aa8.jpg",
   }));
+
   return (
     <S.Wrapper>
       <S.ContainerProductsKart>
         {!!mockData?.length ? (
-          mockData?.map((peripheral) => (
+          <>
+          {mockData?.map((peripheral) => (
             <ProductCardKart
               pk_id={peripheral?.pk_id}
               name={peripheral?.name}
@@ -23,7 +26,10 @@ export const ShoppingKart = () => {
               image={peripheral?.image}
               onClick={(data) => console.log("data: ", data)}
             />
-          ))
+          ))}
+          <S.StyledButton variant="contained" onClick={() => console.log("sdasdsad")}>Finalizar Compra</S.StyledButton>
+          </>
+          
         ) : (
           <></>
         )}
