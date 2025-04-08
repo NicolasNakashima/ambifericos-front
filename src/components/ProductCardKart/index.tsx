@@ -1,4 +1,5 @@
 import * as S from "./style";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface IProductCardKart {
   pk_id: number;
@@ -20,11 +21,14 @@ export default function ProductCardKart({
   return (
     <S.Card onClick={() => onClick({ pk_id })}>
       <S.ImageCard src={image} />
-      <S.CardInformations>
-        <S.ProductName>{name}</S.ProductName>
-        <S.ProductPrice>R$ {price}</S.ProductPrice>
-        <S.ProductDescription>{description}</S.ProductDescription>
-      </S.CardInformations>
+      <S.InfoAndAction>
+        <S.CardInformations>
+          <S.ProductName>{name}</S.ProductName>
+          <S.ProductPrice>R$ {price}</S.ProductPrice>
+          <S.ProductDescription>{description}</S.ProductDescription>
+        </S.CardInformations>
+        <DeleteIcon fontSize="large" color="error" />
+      </S.InfoAndAction>
     </S.Card>
   );
 }

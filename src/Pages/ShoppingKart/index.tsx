@@ -14,26 +14,30 @@ export const ShoppingKart = () => {
 
   return (
     <S.Wrapper>
-      <S.ContainerProductsKart>
+      <S.Container>
         {!!mockData?.length ? (
-          <>
-          {mockData?.map((peripheral) => (
-            <ProductCardKart
-              pk_id={peripheral?.pk_id}
-              name={peripheral?.name}
-              description={peripheral?.description}
-              price={peripheral?.price}
-              image={peripheral?.image}
-              onClick={(data) => console.log("data: ", data)}
-            />
-          ))}
-          <S.StyledButton variant="contained" onClick={() => console.log("sdasdsad")}>Finalizar Compra</S.StyledButton>
-          </>
-          
+          <S.ContainerProductsKart>
+            {mockData?.map((peripheral) => (
+              <ProductCardKart
+                pk_id={peripheral?.pk_id}
+                name={peripheral?.name}
+                description={peripheral?.description}
+                price={peripheral?.price}
+                image={peripheral?.image}
+                onClick={(data) => console.log("data: ", data)}
+              />
+            ))}
+            <S.StyledButton
+              variant="contained"
+              onClick={() => console.log("sdasdsad")}
+            >
+              Finalizar Compra
+            </S.StyledButton>
+          </S.ContainerProductsKart>
         ) : (
           <></>
         )}
-      </S.ContainerProductsKart>
+      </S.Container>
     </S.Wrapper>
   );
 };

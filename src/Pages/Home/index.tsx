@@ -13,18 +13,20 @@ export const Home = () => {
 
   return (
     <S.Wrapper>
-      <S.RecomendedContainer>
-        {mockData?.map((peripheral) => (
-          <ProductCard
-            pk_id={peripheral?.pk_id}
-            name={peripheral?.name}
-            description={peripheral?.description}
-            price={peripheral?.price}
-            image={peripheral?.image}
-            onClick={(data) => console.log("data: ", data)}
-          />
-        ))}
-      </S.RecomendedContainer>
+      <S.Container>
+        <S.RecomendedContainer>
+          {mockData?.map((peripheral) => (
+            <ProductCard
+              pk_id={peripheral?.pk_id}
+              name={peripheral?.name}
+              description={peripheral?.description}
+              price={peripheral?.price}
+              image={peripheral?.image}
+              onClick={(data) => console.log("data: ", data)}
+            />
+          ))}
+        </S.RecomendedContainer>
+      </S.Container>
     </S.Wrapper>
   );
 };

@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import styled, { css } from "styled-components";
 
 export const Wrapper = styled.div(
-  () => css`
+    () => css`
     display: flex;
     justify-content: center;
     align-content: center;
@@ -13,17 +13,29 @@ export const Wrapper = styled.div(
   `
 );
 
+export const Container = styled.div(
+    () => css`
+
+    display: flex;
+    max-width: 1400px;
+    justify-content: center;
+    width: 100%;
+    `
+)
+
 export const ContainerProductsKart = styled.div(
-  () => css`
+    () => css`
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 3rem;
+    width: 100%;
+    justify-content: center;
   `
 );
 
 export const StyledButton = styled(Button)(
-  () => css`
+    () => css`
   padding: 10px;
   
   `
