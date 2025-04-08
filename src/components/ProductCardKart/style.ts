@@ -59,8 +59,34 @@ export const InfoAndAction = styled.div(
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 8px;
+    padding: 20px;
     
     
+    `
+)
+
+export const styledCounter = styled.div(
+    () => css`
+    display: flex;
+    padding: 3px;
+    align-items: center;
+    border: 1px solid var(--Border-input, #E2E6EA);
+    border-radius: 30px;
+    
+    `
+)
+
+export const counterTitle = styled.p(
+    () => css`
+    font-size: 20px;
+    font-weight: 700;
+  `
+)
+
+export const counterAndButton = styled.div(
+    () => css`
+    display: flex;
+    align-items: center;
+    gap: 20px;
     `
 )
