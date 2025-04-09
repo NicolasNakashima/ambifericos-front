@@ -60,8 +60,6 @@ export const InfoAndAction = styled.div(
     align-items: center;
     width: 100%;
     padding: 20px;
-    
-    
     `
 )
 
@@ -72,7 +70,6 @@ export const styledCounter = styled.div(
     align-items: center;
     border: 1px solid var(--Border-input, #E2E6EA);
     border-radius: 30px;
-    
     `
 )
 

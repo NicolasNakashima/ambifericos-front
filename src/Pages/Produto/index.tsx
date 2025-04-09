@@ -2,7 +2,6 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import * as S from "./styles";
-import { Button } from "@mui/material";
 
 interface IProdutoProps {
     name: string;

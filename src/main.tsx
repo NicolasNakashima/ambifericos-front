@@ -8,6 +8,7 @@ import { Home } from "./Pages/Home";
 import { MainPage } from "./Pages/MainPage";
 import { ShoppingKart } from "./Pages/ShoppingKart";
 import { SnackbarProvider } from "notistack";
+import { Produto } from "./Pages/Produto";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
         path: "/carrinho",
         element: <ShoppingKart />,
       },
+      {
+        path: "/produto/:id",
+        element: <Produto />,
+      },
     ],
   },
   {
@@ -35,7 +40,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <SnackbarProvider>
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </SnackbarProvider>
   </StrictMode>
 );
