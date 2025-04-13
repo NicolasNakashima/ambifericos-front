@@ -9,6 +9,7 @@ import { MainPage } from "./Pages/MainPage";
 import { ShoppingKart } from "./Pages/ShoppingKart";
 import { SnackbarProvider } from "notistack";
 import { Produto } from "./Pages/Produto";
+import { Admin } from "./Pages/Admin";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/produto/:id",
         element: <Produto />,
+      },
+      {
+        path: "/admin",
+        element: <Admin />,
       },
     ],
   },
