@@ -1,11 +1,19 @@
 import { useState } from "react";
 import * as S from "./styles";
 import { Button, Modal } from "@mui/material";
-import { ProductListComp } from "../../components/ProductListComp";
+import { AdminListing } from "../../components/AdminListing";
 
 export const Admin = () => {
   const [openNewPro, setOpenNewPro] = useState(false);
   const [openListProducts, setOpenListProducts] = useState(false);
+  const [openAddAdmin, setOpenAddAdmin] = useState(false);
+  const [openListAdmins, setOpenListAdmins] = useState(false);
+
+  const [formValuesAdmin, setFormValuesAdmin] = useState({
+    nome: "",
+    email: "",
+    senha: "",
+  });
 
   const [formValues, setFormValues] = useState({
     nome: "",
@@ -14,6 +22,10 @@ export const Admin = () => {
     estoque: "",
     imagem: "",
   });
+
+  const isAdminFormValid = Object.values(formValuesAdmin).every(
+    (value) => value.trim() !== ""
+  );
 
   const isFormValid = Object.values(formValues).every(
     (value) => value.trim() !== ""
@@ -24,8 +36,31 @@ export const Admin = () => {
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleInputChangeAdmin = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormValuesAdmin((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCloseAddAdminModal = () => {
+    setOpenAddAdmin(false);
+    setFormValuesAdmin({
+      nome: "",
+      email: "",
+      senha: "",
+    });
+  };
+
+  const handleSubmitAddAdmin = () => {
+    console.log("Novo admin:", formValuesAdmin);
+    handleCloseAddAdminModal();
+  };
+
   const handleSubmitAdd = () => {
     console.log("Produto adicionado:", formValues);
+    handleCloseAddProductModal();
+  };
+
+  const handleCloseAddProductModal = () => {
     setOpenNewPro(false);
     setFormValues({
       nome: "",
@@ -38,7 +73,10 @@ export const Admin = () => {
 
   const handleDeleteProduct = (data: { pk_id: number }) => {
     console.log("Excluir produto com ID:", data.pk_id);
-    // Lógica de exclusão real viria aqui no futuro
+  };
+
+  const handleDeleteAdmin = (data: { pk_id: number }) => {
+    console.log("Excluir admin com ID:", data.pk_id);
   };
 
   const mockData = Array.from({ length: 20 }, (_, i) => ({
@@ -47,6 +85,13 @@ export const Admin = () => {
     description: `Esse é o ambiduwille ${i + 1}`,
     price: 2 * i,
     stock: i + 1,
+    image:
+      "https://i.pinimg.com/736x/13/2c/ca/132ccab00cbe2774aa975c147c584aa8.jpg",
+  }));
+
+  const mockAdmins = Array.from({ length: 10 }, (_, i) => ({
+    pk_id: i + 100,
+    name: `Admin ${i + 1}`,
     image:
       "https://i.pinimg.com/736x/13/2c/ca/132ccab00cbe2774aa975c147c584aa8.jpg",
   }));
@@ -70,20 +115,27 @@ export const Admin = () => {
           >
             Listagem de Produtos
           </Button>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setOpenAddAdmin(true)}
+          >
             Adicionar Admin
           </Button>
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setOpenListAdmins(true)}
+          >
             Listagem de Admins
           </Button>
         </S.ProductDiv>
 
         {/* Modal: Adicionar Produto */}
-        <Modal open={openNewPro} onClose={() => setOpenNewPro(false)}>
+        <Modal open={openNewPro} onClose={handleCloseAddProductModal}>
           <S.ContainerModalNewProduct>
             <S.ContainerForm>
               <S.Title>Adicionar Produto</S.Title>
-
               <S.StyledTextField
                 label="Nome"
                 variant="standard"
@@ -121,7 +173,6 @@ export const Admin = () => {
                 value={formValues.imagem}
                 onChange={handleInputChange}
               />
-
               <Button
                 variant="contained"
                 color="primary"
@@ -144,12 +195,72 @@ export const Admin = () => {
               <S.Title>Listagem de Produtos</S.Title>
               <S.ScrollArea>
                 {mockData.map((product) => (
-                  <ProductListComp
+                  <AdminListing
                     key={product.pk_id}
                     pk_id={product.pk_id}
                     name={product.name}
                     image={product.image}
                     onDelete={handleDeleteProduct}
+                  />
+                ))}
+              </S.ScrollArea>
+            </S.ContainerForm>
+          </S.ContainerModalNewProduct>
+        </Modal>
+
+        {/* Modal: Adicionar Admin */}
+        <Modal open={openAddAdmin} onClose={handleCloseAddAdminModal}>
+          <S.ContainerModalNewProduct>
+            <S.ContainerForm>
+              <S.Title>Adicionar Admin</S.Title>
+              <S.StyledTextField
+                label="Nome"
+                variant="standard"
+                name="nome"
+                value={formValuesAdmin.nome}
+                onChange={handleInputChangeAdmin}
+              />
+              <S.StyledTextField
+                label="Email"
+                variant="standard"
+                name="email"
+                type="email"
+                value={formValuesAdmin.email}
+                onChange={handleInputChangeAdmin}
+              />
+              <S.StyledTextField
+                label="Senha"
+                variant="standard"
+                name="senha"
+                type="password"
+                value={formValuesAdmin.senha}
+                onChange={handleInputChangeAdmin}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={!isAdminFormValid}
+                onClick={handleSubmitAddAdmin}
+              >
+                Adicionar
+              </Button>
+            </S.ContainerForm>
+          </S.ContainerModalNewProduct>
+        </Modal>
+
+        {/* Modal: Listagem de Admins */}
+        <Modal open={openListAdmins} onClose={() => setOpenListAdmins(false)}>
+          <S.ContainerModalNewProduct>
+            <S.ContainerForm>
+              <S.Title>Listagem de Admins</S.Title>
+              <S.ScrollArea>
+                {mockAdmins.map((admin) => (
+                  <AdminListing
+                    key={admin.pk_id}
+                    pk_id={admin.pk_id}
+                    name={admin.name}
+                    image={admin.image}
+                    onDelete={handleDeleteAdmin}
                   />
                 ))}
               </S.ScrollArea>
