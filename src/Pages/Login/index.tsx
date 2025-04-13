@@ -7,60 +7,67 @@ import { Loading } from "../../components/Loading";
 import { useNavigate } from "react-router-dom";
 
 export interface IAuthResponse {
-  url_photo: string
-  token: string
+  url_photo: string;
+  token: string;
 }
 
 export const Login = () => {
   const [data, setData] = useState<IAuthResponse>({
     url_photo: "",
-    token: ""
+    token: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  
 
   const handleLogin = async (values: ILoginProps) => {
     setIsLoading(true);
-        try {
-      const response = await fetch("https://apikhiata.onrender.com/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: values.name,
-          password: values.password,
-        }),
-      });
+    try {
+      const response = await fetch(
+        "https://apikhiata.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: values.name,
+            password: values.password,
+          }),
+        }
+      );
 
       const responseAPI = await response.json();
       setData(responseAPI);
-      localStorage.setItem('username', values.name);
-      localStorage.setItem('password', btoa(values.password));
-      enqueueSnackbar('Login realizado com sucesso!', { variant: 'success', autoHideDuration: 2000 });
+      localStorage.setItem("username", values.name);
+      localStorage.setItem("password", btoa(values.password));
+      enqueueSnackbar("Login realizado com sucesso!", {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
     } catch (error) {
-      enqueueSnackbar('Erro ao realizar login. Verifique suas credenciais.', { variant: 'error', autoHideDuration: 2000 });
+      enqueueSnackbar("Erro ao realizar login. Verifique suas credenciais.", {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
       console.error("Error:", error);
     } finally {
       setIsLoading(false);
-    } 
+    }
   };
 
   useEffect(() => {
     if (data.token !== "") {
-      localStorage.setItem('url_photo', data.url_photo);
-      localStorage.setItem('token', data.token);
+      localStorage.setItem("url_photo", data.url_photo);
+      localStorage.setItem("token", data.token);
     }
   }, [data]);
 
   useEffect(() => {
-    if(data.token !== "" && data.url_photo !== "" && !isLoading) {
-      navigate('/');
+    if (data.token !== "" && data.url_photo !== "" && !isLoading) {
+      navigate("/");
     }
-  },[isLoading]);
-  
+  }, [isLoading]);
 
   return (
     <>

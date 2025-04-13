@@ -15,11 +15,11 @@ const LoginModal = ({ handleSubmit }: IDataProps) => {
 
   return (
     <S.Wrapper>
-      <S.StyledTitle>Khiata - Admin</S.StyledTitle>
+      <S.StyledTitle>Ambiféricos - Cadastro</S.StyledTitle>
       <S.TextFieldStyled
         label="Digite seu usuário"
         variant="standard"
-        onChange={(e) => setName(e.target.value)} 
+        onChange={(e) => setName(e.target.value)}
       />
       <S.TextFieldStyled
         label="Digite sua senha"
