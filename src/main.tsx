@@ -10,6 +10,7 @@ import { ShoppingKart } from "./Pages/ShoppingKart";
 import { SnackbarProvider } from "notistack";
 import { Produto } from "./Pages/Produto";
 import { Admin } from "./Pages/Admin";
+import { Cadastro } from "./Pages/Cadastro";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,11 @@ const router = createBrowserRouter([
     path: "/login",
     // errorElement: <ErrorPage />,
     element: <Login />,
+  },
+  {
+    path: "/cadastro",
+    // errorElement: <ErrorPage />,
+    element: <Cadastro />,
   },
 ]);
 

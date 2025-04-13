@@ -6,7 +6,7 @@ import { useSnackbar } from "notistack";
 import { Loading } from "../../components/Loading";
 import { useNavigate } from "react-router-dom";
 
-export const Register = () => {
+export const Cadastro = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
