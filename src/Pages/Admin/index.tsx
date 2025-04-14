@@ -5,6 +5,7 @@ import { AdminListing } from "../../components/AdminListing";
 import { usePostNewProduct } from "../../hooks/usePostNewProduct";
 import { enqueueSnackbar } from "notistack";
 import { useGetProducts } from "../../hooks/useGetProducts";
+import { usePostNewClient } from "../../hooks/usePostNewClient";
 
 export const Admin = () => {
   const [openNewPro, setOpenNewPro] = useState(false);
@@ -31,6 +32,9 @@ export const Admin = () => {
 
   const { getProductsData, getProductsErrorMessage, getProducts } =
     useGetProducts({ enabled: false });
+
+  const { postNewClient, postNewClientData, postNewClientErrorMessage } =
+    usePostNewClient();
 
   const isAdminFormValid = Object.values(formValuesAdmin).every(
     (value) => value.trim() !== ""
@@ -60,7 +64,15 @@ export const Admin = () => {
   };
 
   const handleSubmitAddAdmin = () => {
-    console.log("Novo admin:", formValuesAdmin);
+    postNewClient({
+      body: {
+        nome: formValuesAdmin.nome,
+        email: formValuesAdmin.email,
+        senha: formValuesAdmin.senha,
+        endereco: "Rua germinare",
+        adm: true,
+      },
+    });
     handleCloseAddAdminModal();
   };
 
@@ -145,6 +157,24 @@ export const Admin = () => {
       setOpenListProducts(false);
     }
   }, [getProductsErrorMessage]);
+
+  useEffect(() => {
+    if (postNewClientData) {
+      enqueueSnackbar("Admin adicionado com sucesso!", {
+        variant: "success",
+      });
+      setOpenAddAdmin(false);
+    }
+  }, [postNewClientData]);
+
+  useEffect(() => {
+    if (postNewClientErrorMessage) {
+      enqueueSnackbar(String(postNewClientErrorMessage), {
+        variant: "error",
+      });
+    }
+    setOpenAddAdmin(false);
+  }, [postNewClientErrorMessage]);
 
   return (
     <S.Wrapper>
