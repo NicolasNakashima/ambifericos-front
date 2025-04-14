@@ -10,6 +10,7 @@ import { usePostNewClient } from "../../hooks/usePostNewClient";
 import { useGetClients } from "../../hooks/useGetClients";
 import { IUserResponse } from "../../types/io";
 import { useDeleteProduct } from "../../hooks/useDeleteProduct";
+import { useDeleteClient } from "../../hooks/useDeleteClient";
 
 export const Admin = () => {
   const [openNewPro, setOpenNewPro] = useState(false);
@@ -44,6 +45,9 @@ export const Admin = () => {
   const { getClients, getClientsData, getClientsErrorMessage } = useGetClients({
     enabled: false,
   });
+
+  const { deleteClient, deleteClientResponse, deleteClientError } =
+    useDeleteClient();
 
   const { deleteProduct, deleteProductResponse, deleteProductError } =
     useDeleteProduct();
@@ -119,7 +123,9 @@ export const Admin = () => {
   };
 
   const handleDeleteAdmin = (data: { pk_id: number }) => {
-    console.log("Excluir admin com ID:", data.pk_id);
+    deleteClient({
+      id: data.pk_id,
+    });
   };
 
   useEffect(() => {
@@ -216,6 +222,25 @@ export const Admin = () => {
       });
     }
   }, [deleteProductError]);
+
+  useEffect(() => {
+    if (deleteClientResponse) {
+      enqueueSnackbar("Admin excluído com sucesso!", {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
+      getClients();
+    }
+  }, [deleteClientResponse]);
+
+  useEffect(() => {
+    if (deleteClientError) {
+      enqueueSnackbar(String(deleteClientError), {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
+    }
+  }, [deleteClientError]);
   return (
     <S.Wrapper>
       <S.Container>
