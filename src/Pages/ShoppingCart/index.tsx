@@ -74,6 +74,7 @@ export const ShoppingCart = () => {
     ) {
       enqueueSnackbar(String(getShoppingCartByClientIdErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
   }, [getShoppingCartByClientIdErrorMessage]);
@@ -82,6 +83,7 @@ export const ShoppingCart = () => {
     if (deleteProductShoppingCartError) {
       enqueueSnackbar(String(deleteProductShoppingCartError), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
   }, [deleteProductShoppingCartError]);
@@ -90,6 +92,7 @@ export const ShoppingCart = () => {
     if (postNewOrderErrorMessage) {
       enqueueSnackbar(String(postNewOrderErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
   }, [postNewOrderErrorMessage]);
@@ -98,6 +101,7 @@ export const ShoppingCart = () => {
     if (deleteProductShoppingCartResponse) {
       enqueueSnackbar(deleteProductShoppingCartResponse, {
         variant: "success",
+        autoHideDuration: 2000,
       });
       setProducts([]);
       getShoppingCartByClientId();
@@ -108,6 +112,7 @@ export const ShoppingCart = () => {
     if (postNewOrderData) {
       enqueueSnackbar(postNewOrderData?.data, {
         variant: "success",
+        autoHideDuration: 2000,
       });
       getShoppingCartByClientId();
     }

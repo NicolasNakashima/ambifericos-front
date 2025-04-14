@@ -20,6 +20,7 @@ export const Home = () => {
     if (getProductsErrorMessage) {
       enqueueSnackbar(String(getProductsErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
   }, [getProductsErrorMessage]);

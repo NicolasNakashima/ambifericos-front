@@ -35,7 +35,7 @@ export const Cadastro = () => {
         variant: "success",
         autoHideDuration: 2000,
       });
-      navigate("/");
+      navigate("/login");
     }
   }, [postNewClientData]);
 

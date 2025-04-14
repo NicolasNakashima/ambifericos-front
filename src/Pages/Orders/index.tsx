@@ -29,6 +29,7 @@ export const Orders = () => {
     if (getOrdersByClientErrorMessage) {
       enqueueSnackbar(String(getOrdersByClientErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
   }, [getOrdersByClientErrorMessage]);

@@ -47,6 +47,7 @@ export const Login = () => {
     if (getClientByEmailAndPasswordErrorMessage) {
       enqueueSnackbar(String(getClientByEmailAndPasswordErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
   }, [getClientByEmailAndPasswordErrorMessage]);

@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const Card = styled.div(
-  () => css`
+    () => css`
     width: 200px;
     max-height: 300px;
     min-height: 300px;
@@ -15,26 +15,26 @@ export const Card = styled.div(
 );
 
 export const ImageCard = styled.img(
-  () => css`
+    () => css`
     width: 100%;
     min-height: 45%;
   `
 );
 
 export const CardInformations = styled.div(
-  () => css`
+    () => css`
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 8px;
+    padding: 2px;
     gap: 1rem;
     overflow: auto;
   `
 );
 
 export const ProductName = styled.p(
-  () => css`
+    () => css`
     font-size: 1.1rem;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -46,14 +46,14 @@ export const ProductName = styled.p(
 );
 
 export const ProductPrice = styled.p(
-  () => css`
+    () => css`
     font-size: 1.5rem;
     font-weight: 600;
   `
 );
 
 export const ProductDescription = styled.p(
-  () => css`
+    () => css`
     font-size: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;

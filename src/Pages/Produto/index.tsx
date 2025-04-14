@@ -60,6 +60,7 @@ export const Produto = () => {
     if (getProductByIdErrorMessage) {
       enqueueSnackbar(String(getProductByIdErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
   }, [getProductByIdErrorMessage]);
@@ -68,6 +69,7 @@ export const Produto = () => {
     if (postAddItemShoppingCartErrorMessage) {
       enqueueSnackbar(String(postAddItemShoppingCartErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
   }, [postAddItemShoppingCartErrorMessage]);
@@ -76,6 +78,7 @@ export const Produto = () => {
     if (postNewOrderErrorMessage) {
       enqueueSnackbar(String(postNewOrderErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
   }, [postNewOrderErrorMessage]);
@@ -84,6 +87,7 @@ export const Produto = () => {
     if (postAddItemShoppingCartData) {
       enqueueSnackbar(postAddItemShoppingCartData, {
         variant: "success",
+        autoHideDuration: 2000,
       });
     }
   }, [postAddItemShoppingCartData]);
@@ -92,6 +96,7 @@ export const Produto = () => {
     if (postNewOrderData) {
       enqueueSnackbar(postNewOrderData?.data, {
         variant: "success",
+        autoHideDuration: 2000,
       });
     }
   }, [postNewOrderData]);
@@ -101,7 +106,13 @@ export const Produto = () => {
       {!!getProductByIdData ? (
         <S.Container>
           <S.ImageAndDesc>
-            <S.Image src={getProductByIdData?.imagem} alt="" />
+            <S.Image
+              src={
+                getProductByIdData.imagem ||
+                "https://media.istockphoto.com/id/1396814518/pt/vetorial/image-coming-soon-no-photo-no-thumbnail-image-available-vector-illustration.jpg?s=612x612&w=0&k=20&c=hJhT_GLCVwSgJIDAO-LxHZEAhQ8rP-2sbO9RGmjMedA="
+              }
+              alt="Imagem não encontrada"
+            />
             <S.description>
               <S.Title>{getProductByIdData?.nome}</S.Title>
               <S.Price>R$ {getProductByIdData?.preco}</S.Price>
