@@ -6,12 +6,15 @@ import { usePostNewProduct } from "../../hooks/usePostNewProduct";
 import { enqueueSnackbar } from "notistack";
 import { useGetProducts } from "../../hooks/useGetProducts";
 import { usePostNewClient } from "../../hooks/usePostNewClient";
+import { useGetClients } from "../../hooks/useGetClients";
+import { IUserResponse } from "../../types/io";
 
 export const Admin = () => {
   const [openNewPro, setOpenNewPro] = useState(false);
   const [openListProducts, setOpenListProducts] = useState(false);
   const [openAddAdmin, setOpenAddAdmin] = useState(false);
   const [openListAdmins, setOpenListAdmins] = useState(false);
+  const [filteredAdmins, setFilteredAdmins] = useState<IUserResponse[]>([]);
 
   const [formValuesAdmin, setFormValuesAdmin] = useState({
     nome: "",
@@ -35,6 +38,10 @@ export const Admin = () => {
 
   const { postNewClient, postNewClientData, postNewClientErrorMessage } =
     usePostNewClient();
+
+  const { getClients, getClientsData, getClientsErrorMessage } = useGetClients({
+    enabled: false,
+  });
 
   const isAdminFormValid = Object.values(formValuesAdmin).every(
     (value) => value.trim() !== ""
@@ -129,6 +136,7 @@ export const Admin = () => {
     if (postNewProductData) {
       enqueueSnackbar("Produto adicionado com sucesso!", {
         variant: "success",
+        autoHideDuration: 2000,
       });
       setOpenNewPro(false);
     }
@@ -138,6 +146,7 @@ export const Admin = () => {
     if (postNewProductErrorMessage) {
       enqueueSnackbar(String(postNewProductErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
     setOpenNewPro(false);
@@ -153,6 +162,7 @@ export const Admin = () => {
     if (getProductsErrorMessage) {
       enqueueSnackbar(String(getProductsErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
       setOpenListProducts(false);
     }
@@ -162,6 +172,7 @@ export const Admin = () => {
     if (postNewClientData) {
       enqueueSnackbar("Admin adicionado com sucesso!", {
         variant: "success",
+        autoHideDuration: 2000,
       });
       setOpenAddAdmin(false);
     }
@@ -171,11 +182,31 @@ export const Admin = () => {
     if (postNewClientErrorMessage) {
       enqueueSnackbar(String(postNewClientErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
     setOpenAddAdmin(false);
   }, [postNewClientErrorMessage]);
 
+  useEffect(() => {
+    if (getClientsData) {
+      const filterData = getClientsData.data.filter(
+        (admin) => admin.adm === true
+      );
+      setFilteredAdmins(filterData);
+      setOpenListAdmins(true);
+    }
+  }, [getClientsData]);
+
+  useEffect(() => {
+    if (getClientsErrorMessage) {
+      enqueueSnackbar(String(getClientsErrorMessage), {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
+      setOpenListAdmins(false);
+    }
+  }, [getClientsErrorMessage]);
   return (
     <S.Wrapper>
       <S.Container>
@@ -205,7 +236,7 @@ export const Admin = () => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => setOpenListAdmins(true)}
+            onClick={() => getClients()}
           >
             Listagem de Admins
           </Button>
@@ -334,12 +365,11 @@ export const Admin = () => {
             <S.ContainerForm>
               <S.Title>Listagem de Admins</S.Title>
               <S.ScrollArea>
-                {mockAdmins.map((admin) => (
+                {filteredAdmins.map((admin) => (
                   <AdminListing
-                    key={admin.pk_id}
-                    pk_id={admin.pk_id}
-                    name={admin.name}
-                    image={admin.image}
+                    key={admin.id}
+                    pk_id={admin.id}
+                    name={admin.nome}
                     onDelete={handleDeleteAdmin}
                   />
                 ))}
