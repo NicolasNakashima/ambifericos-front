@@ -5,6 +5,7 @@ export interface IRegisterProps {
   name: string;
   email: string;
   password: string;
+  address: string;
 }
 
 export interface IDataProps {
@@ -15,9 +16,13 @@ const RegisterModal = ({ handleSubmit }: IDataProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
 
   const isFormValid =
-    name.trim() !== "" && email.trim() !== "" && password.trim() !== "";
+    name.trim() !== "" &&
+    email.trim() !== "" &&
+    password.trim() !== "" &&
+    address.trim() !== "";
 
   return (
     <S.Wrapper>
@@ -46,10 +51,17 @@ const RegisterModal = ({ handleSubmit }: IDataProps) => {
         onChange={(e) => setPassword(e.target.value)}
       />
 
+      <S.TextFieldStyled
+        label="Digite seu endereço"
+        variant="standard"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+      />
+
       <S.ButtonStyled
         color="inherit"
         disabled={!isFormValid}
-        onClick={() => handleSubmit({ name, email, password })}
+        onClick={() => handleSubmit({ name, email, password, address })} // ✅ Envia o novo campo
       >
         Cadastrar
       </S.ButtonStyled>

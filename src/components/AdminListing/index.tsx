@@ -5,7 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 interface IAdminListing {
   pk_id: number;
   name: string;
-  image: string;
+  image?: string;
   onDelete: (data: { pk_id: number }) => void;
 }
 
@@ -18,7 +18,12 @@ export const AdminListing = ({
   return (
     <S.Wrapper>
       <S.AvatarAndName>
-        <S.SyledAvatar src={image} />
+        <S.SyledAvatar
+          src={
+            image ||
+            "https://adimax.com.br/wp-content/uploads/2022/05/cuidados-filhote-de-cachorro.jpg"
+          }
+        />
         <S.StyledName>{name}</S.StyledName>
       </S.AvatarAndName>
       <IconButton onClick={() => onDelete({ pk_id: pk_id })}>

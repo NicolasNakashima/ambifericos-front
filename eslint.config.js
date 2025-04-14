@@ -26,6 +26,7 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": "off",
       "no-extra-boolean-cast": "off",
       "@typescript-eslint/no-explicit-any": "off",
+      "react-hooks/exhaustive-deps": "off",
     },
   }
 );

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import * as S from "./styles";
 import { Button, Modal } from "@mui/material";
@@ -5,12 +6,18 @@ import { AdminListing } from "../../components/AdminListing";
 import { usePostNewProduct } from "../../hooks/usePostNewProduct";
 import { enqueueSnackbar } from "notistack";
 import { useGetProducts } from "../../hooks/useGetProducts";
+import { usePostNewClient } from "../../hooks/usePostNewClient";
+import { useGetClients } from "../../hooks/useGetClients";
+import { IUserResponse } from "../../types/io";
+import { useDeleteProduct } from "../../hooks/useDeleteProduct";
+import { useDeleteClient } from "../../hooks/useDeleteClient";
 
 export const Admin = () => {
   const [openNewPro, setOpenNewPro] = useState(false);
   const [openListProducts, setOpenListProducts] = useState(false);
   const [openAddAdmin, setOpenAddAdmin] = useState(false);
   const [openListAdmins, setOpenListAdmins] = useState(false);
+  const [filteredAdmins, setFilteredAdmins] = useState<IUserResponse[]>([]);
 
   const [formValuesAdmin, setFormValuesAdmin] = useState({
     nome: "",
@@ -31,6 +38,19 @@ export const Admin = () => {
 
   const { getProductsData, getProductsErrorMessage, getProducts } =
     useGetProducts({ enabled: false });
+
+  const { postNewClient, postNewClientData, postNewClientErrorMessage } =
+    usePostNewClient();
+
+  const { getClients, getClientsData, getClientsErrorMessage } = useGetClients({
+    enabled: false,
+  });
+
+  const { deleteClient, deleteClientResponse, deleteClientError } =
+    useDeleteClient();
+
+  const { deleteProduct, deleteProductResponse, deleteProductError } =
+    useDeleteProduct();
 
   const isAdminFormValid = Object.values(formValuesAdmin).every(
     (value) => value.trim() !== ""
@@ -60,7 +80,15 @@ export const Admin = () => {
   };
 
   const handleSubmitAddAdmin = () => {
-    console.log("Novo admin:", formValuesAdmin);
+    postNewClient({
+      body: {
+        nome: formValuesAdmin.nome,
+        email: formValuesAdmin.email,
+        senha: formValuesAdmin.senha,
+        endereco: "Rua germinare",
+        adm: true,
+      },
+    });
     handleCloseAddAdminModal();
   };
 
@@ -89,34 +117,22 @@ export const Admin = () => {
   };
 
   const handleDeleteProduct = (data: { pk_id: number }) => {
-    console.log("Excluir produto com ID:", data.pk_id);
+    deleteProduct({
+      id: data.pk_id,
+    });
   };
 
   const handleDeleteAdmin = (data: { pk_id: number }) => {
-    console.log("Excluir admin com ID:", data.pk_id);
+    deleteClient({
+      id: data.pk_id,
+    });
   };
-
-  const mockData = Array.from({ length: 20 }, (_, i) => ({
-    pk_id: i + 1,
-    name: `Ambi ${i + 1}`,
-    description: `Esse é o ambiduwille ${i + 1}`,
-    price: 2 * i,
-    stock: i + 1,
-    image:
-      "https://i.pinimg.com/736x/13/2c/ca/132ccab00cbe2774aa975c147c584aa8.jpg",
-  }));
-
-  const mockAdmins = Array.from({ length: 10 }, (_, i) => ({
-    pk_id: i + 100,
-    name: `Admin ${i + 1}`,
-    image:
-      "https://i.pinimg.com/736x/13/2c/ca/132ccab00cbe2774aa975c147c584aa8.jpg",
-  }));
 
   useEffect(() => {
     if (postNewProductData) {
       enqueueSnackbar("Produto adicionado com sucesso!", {
         variant: "success",
+        autoHideDuration: 2000,
       });
       setOpenNewPro(false);
     }
@@ -126,6 +142,7 @@ export const Admin = () => {
     if (postNewProductErrorMessage) {
       enqueueSnackbar(String(postNewProductErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
     }
     setOpenNewPro(false);
@@ -141,11 +158,89 @@ export const Admin = () => {
     if (getProductsErrorMessage) {
       enqueueSnackbar(String(getProductsErrorMessage), {
         variant: "error",
+        autoHideDuration: 2000,
       });
       setOpenListProducts(false);
     }
   }, [getProductsErrorMessage]);
 
+  useEffect(() => {
+    if (postNewClientData) {
+      enqueueSnackbar("Admin adicionado com sucesso!", {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
+      setOpenAddAdmin(false);
+    }
+  }, [postNewClientData]);
+
+  useEffect(() => {
+    if (postNewClientErrorMessage) {
+      enqueueSnackbar(String(postNewClientErrorMessage), {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
+    }
+    setOpenAddAdmin(false);
+  }, [postNewClientErrorMessage]);
+
+  useEffect(() => {
+    if (getClientsData) {
+      const filterData = getClientsData.data.filter(
+        (admin) => admin.adm === true
+      );
+      setFilteredAdmins(filterData);
+      setOpenListAdmins(true);
+    }
+  }, [getClientsData]);
+
+  useEffect(() => {
+    if (getClientsErrorMessage) {
+      enqueueSnackbar(String(getClientsErrorMessage), {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
+      setOpenListAdmins(false);
+    }
+  }, [getClientsErrorMessage]);
+
+  useEffect(() => {
+    if (deleteProductResponse) {
+      enqueueSnackbar("Produto excluído com sucesso!", {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
+      getProducts();
+    }
+  }, [deleteProductResponse]);
+
+  useEffect(() => {
+    if (deleteProductError) {
+      enqueueSnackbar(String(deleteProductError), {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
+    }
+  }, [deleteProductError]);
+
+  useEffect(() => {
+    if (deleteClientResponse) {
+      enqueueSnackbar("Admin excluído com sucesso!", {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
+      getClients();
+    }
+  }, [deleteClientResponse]);
+
+  useEffect(() => {
+    if (deleteClientError) {
+      enqueueSnackbar(String(deleteClientError), {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
+    }
+  }, [deleteClientError]);
   return (
     <S.Wrapper>
       <S.Container>
@@ -175,7 +270,7 @@ export const Admin = () => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => setOpenListAdmins(true)}
+            onClick={() => getClients()}
           >
             Listagem de Admins
           </Button>
@@ -304,12 +399,11 @@ export const Admin = () => {
             <S.ContainerForm>
               <S.Title>Listagem de Admins</S.Title>
               <S.ScrollArea>
-                {mockAdmins.map((admin) => (
+                {filteredAdmins.map((admin) => (
                   <AdminListing
-                    key={admin.pk_id}
-                    pk_id={admin.pk_id}
-                    name={admin.name}
-                    image={admin.image}
+                    key={admin.id}
+                    pk_id={admin.id}
+                    name={admin.nome}
                     onDelete={handleDeleteAdmin}
                   />
                 ))}
