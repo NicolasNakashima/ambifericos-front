@@ -76,4 +76,5 @@ export interface IUserResponse {
   senha: string;
   endereco: string;
   createdAt: string;
+  adm: boolean;
 }

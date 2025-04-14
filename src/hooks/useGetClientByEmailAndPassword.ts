@@ -1,6 +1,7 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { apiService } from "../service/apiService";
 import { useQuery } from "@tanstack/react-query";
+import { IUserResponse } from "../types/io";
 
 export const useGetClientByEmailAndPassword = ({
   clientEmail,
@@ -12,8 +13,8 @@ export const useGetClientByEmailAndPassword = ({
   enabled?: boolean;
 }) => {
   const { refetch, data, error, ...rest } = useQuery<
-    AxiosResponse<any>,
-    AxiosError<{ message?: string }>
+    AxiosResponse<IUserResponse>,
+    AxiosError
   >({
     queryKey: [
       "/ambifericos/cliente/listarClientePeloEmailSenha",
@@ -31,7 +32,7 @@ export const useGetClientByEmailAndPassword = ({
   return {
     getClientByEmailAndPassword: refetch,
     getClientByEmailAndPasswordData: data?.data,
-    getClientByEmailAndPasswordErrorMessage: error?.response?.data.message,
+    getClientByEmailAndPasswordErrorMessage: error?.response?.data,
     getClientByEmailAndPasswordRest: rest,
   };
 };

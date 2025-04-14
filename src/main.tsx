@@ -16,6 +16,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { ErrorPage } from "./Pages/ErrorPage";
 import { Admin } from "./Pages/Admin";
 import { Cadastro } from "./Pages/Cadastro";
+import { AccessError } from "./Pages/AccessError";
 
 const router = createBrowserRouter([
   {
@@ -45,8 +46,13 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/admin",
-        element: <Admin />,
+        element: <ProtectedRoute adminOnly={true} />,
+        children: [
+          {
+            path: "/admin",
+            element: <Admin />,
+          },
+        ],
       },
     ],
   },
@@ -57,8 +63,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/cadastro",
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     element: <Cadastro />,
+  },
+  {
+    path: "/unauthorized",
+    errorElement: <ErrorPage />,
+    element: <AccessError />,
   },
 ]);
 

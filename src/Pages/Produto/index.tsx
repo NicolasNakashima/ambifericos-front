@@ -5,6 +5,7 @@ import * as S from "./styles";
 import { useGetProductById } from "../../hooks/useGetProductById";
 import { usePostAddItemShoppingCart } from "../../hooks/usePostAddItemShoppingCart";
 import { usePostNewOrder } from "../../hooks/usePostNewOrder";
+import { useUser } from "../../contexts/AuthContext";
 
 interface IProdutoProps {
   name: string;
@@ -16,6 +17,7 @@ interface IProdutoProps {
 export const Produto = () => {
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
+  const { user } = useUser();
 
   const { getProductByIdData, getProductByIdErrorMessage, getProductByIdRest } =
     useGetProductById({ productId: Number(id), enabled: !!id });
@@ -37,14 +39,14 @@ export const Produto = () => {
   function onAddShopping(id: number) {
     postAddItemShoppingCart({
       produtoId: id,
-      clienteId: 1,
+      clienteId: user?.id ?? 0,
       quantidade: 1,
     });
   }
 
   function onFinishOrder(id: number) {
     postNewOrder({
-      cliente: 1,
+      cliente: user?.id ?? 0,
       itens: [
         {
           produtoId: id,

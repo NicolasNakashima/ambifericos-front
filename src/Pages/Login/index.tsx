@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
-import * as S from "./styles";
-import { ILoginProps, LoginModal } from "../../components/LoginModal";
 import { useSnackbar } from "notistack";
-import { Loading } from "../../components/Loading";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetClientByEmailAndPassword } from "../../hooks/useGetClientByEmailAndPassword";
+import { Loading } from "../../components/Loading";
+import { LoginModal } from "../../components/LoginModal";
 import { useUser } from "../../contexts/AuthContext";
+import { useGetClientByEmailAndPassword } from "../../hooks/useGetClientByEmailAndPassword";
+import * as S from "./styles";
 
 export const Login = () => {
   const { setUser } = useUser();

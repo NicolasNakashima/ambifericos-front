@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import * as S from "./styles";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deepOrange } from "@mui/material/colors";
 import { useUser } from "../../contexts/AuthContext";
@@ -22,11 +22,21 @@ export const Navbar = () => {
   const navigate = useNavigate();
   const { user, setUser } = useUser();
 
-  const MenuOptions = [
-    { name: "Home", path: "/" },
-    { name: "Carrinho", path: "/carrinho" },
-    { name: "Meus pedidos", path: "/meus-pedidos" },
-  ];
+  const [MenuOptions, setMenuOption] = useState(
+    user?.adm
+      ? [
+          { name: "Home", path: "/" },
+          { name: "Carrinho", path: "/carrinho" },
+          { name: "Meus pedidos", path: "/meus-pedidos" },
+          { name: "Admin", path: "/admin" },
+        ]
+      : [
+          { name: "Home", path: "/" },
+          { name: "Carrinho", path: "/carrinho" },
+          { name: "Meus pedidos", path: "/meus-pedidos" },
+        ]
+  );
+
   const userMenu = ["Logout"];
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
