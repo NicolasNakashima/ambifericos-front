@@ -15,7 +15,7 @@ const LoginModal = ({ handleSubmit }: IDataProps) => {
 
   return (
     <S.Wrapper>
-      <S.StyledTitle>Ambiféricos - Sua loja de periféricos</S.StyledTitle>
+      <S.StyledTitle>Ambiféricos - Login</S.StyledTitle>
       <S.TextFieldStyled
         label="Digite seu email"
         variant="standard"

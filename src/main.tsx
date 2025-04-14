@@ -14,6 +14,8 @@ import { Orders } from "./Pages/Orders";
 import { UserProvider } from "./contexts/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { ErrorPage } from "./Pages/ErrorPage";
+import { Admin } from "./Pages/Admin";
+import { Cadastro } from "./Pages/Cadastro";
 
 const router = createBrowserRouter([
   {
@@ -42,12 +44,21 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "/admin",
+        element: <Admin />,
+      },
     ],
   },
   {
     path: "/login",
     errorElement: <ErrorPage />,
     element: <Login />,
+  },
+  {
+    path: "/cadastro",
+    // errorElement: <ErrorPage />,
+    element: <Cadastro />,
   },
 ]);
 
