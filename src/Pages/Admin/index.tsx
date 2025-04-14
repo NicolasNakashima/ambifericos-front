@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./styles";
 import { Button, Modal } from "@mui/material";
 import { AdminListing } from "../../components/AdminListing";
+import { usePostNewProduct } from "../../hooks/usePostNewProduct";
+import { enqueueSnackbar } from "notistack";
 
 export const Admin = () => {
   const [openNewPro, setOpenNewPro] = useState(false);
@@ -22,6 +24,9 @@ export const Admin = () => {
     estoque: "",
     imagem: "",
   });
+
+  const { postNewProduct, postNewProductData, postNewProductErrorMessage } =
+    usePostNewProduct();
 
   const isAdminFormValid = Object.values(formValuesAdmin).every(
     (value) => value.trim() !== ""
@@ -56,7 +61,15 @@ export const Admin = () => {
   };
 
   const handleSubmitAdd = () => {
-    console.log("Produto adicionado:", formValues);
+    postNewProduct({
+      body: {
+        nome: formValues.nome,
+        descricao: formValues.descricao,
+        preco: Number(formValues.preco),
+        estoque: Number(formValues.estoque),
+        imagem: formValues.imagem,
+      },
+    });
     handleCloseAddProductModal();
   };
 
@@ -95,6 +108,24 @@ export const Admin = () => {
     image:
       "https://i.pinimg.com/736x/13/2c/ca/132ccab00cbe2774aa975c147c584aa8.jpg",
   }));
+
+  useEffect(() => {
+    if (postNewProductData) {
+      enqueueSnackbar("Produto adicionado com sucesso!", {
+        variant: "success",
+      });
+      setOpenNewPro(false);
+    }
+  }, [postNewProductData]);
+
+  useEffect(() => {
+    if (postNewProductErrorMessage) {
+      enqueueSnackbar(String(postNewProductErrorMessage), {
+        variant: "error",
+      });
+    }
+    setOpenNewPro(false);
+  }, [postNewProductErrorMessage]);
 
   return (
     <S.Wrapper>
