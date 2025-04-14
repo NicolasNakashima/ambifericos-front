@@ -4,6 +4,7 @@ import { Button, Modal } from "@mui/material";
 import { AdminListing } from "../../components/AdminListing";
 import { usePostNewProduct } from "../../hooks/usePostNewProduct";
 import { enqueueSnackbar } from "notistack";
+import { useGetProducts } from "../../hooks/useGetProducts";
 
 export const Admin = () => {
   const [openNewPro, setOpenNewPro] = useState(false);
@@ -27,6 +28,9 @@ export const Admin = () => {
 
   const { postNewProduct, postNewProductData, postNewProductErrorMessage } =
     usePostNewProduct();
+
+  const { getProductsData, getProductsErrorMessage, getProducts } =
+    useGetProducts({ enabled: false });
 
   const isAdminFormValid = Object.values(formValuesAdmin).every(
     (value) => value.trim() !== ""
@@ -127,6 +131,21 @@ export const Admin = () => {
     setOpenNewPro(false);
   }, [postNewProductErrorMessage]);
 
+  useEffect(() => {
+    if (getProductsData) {
+      setOpenListProducts(true);
+    }
+  }, [getProductsData]);
+
+  useEffect(() => {
+    if (getProductsErrorMessage) {
+      enqueueSnackbar(String(getProductsErrorMessage), {
+        variant: "error",
+      });
+      setOpenListProducts(false);
+    }
+  }, [getProductsErrorMessage]);
+
   return (
     <S.Wrapper>
       <S.Container>
@@ -142,7 +161,7 @@ export const Admin = () => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => setOpenListProducts(true)}
+            onClick={() => getProducts()}
           >
             Listagem de Produtos
           </Button>
@@ -225,12 +244,12 @@ export const Admin = () => {
             <S.ContainerForm>
               <S.Title>Listagem de Produtos</S.Title>
               <S.ScrollArea>
-                {mockData.map((product) => (
+                {getProductsData?.map((product) => (
                   <AdminListing
-                    key={product.pk_id}
-                    pk_id={product.pk_id}
-                    name={product.name}
-                    image={product.image}
+                    key={product.id}
+                    pk_id={product.id}
+                    name={product.nome}
+                    image={product.imagem}
                     onDelete={handleDeleteProduct}
                   />
                 ))}
