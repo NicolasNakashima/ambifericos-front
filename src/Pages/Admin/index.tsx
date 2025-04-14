@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import * as S from "./styles";
 import { Button, Modal } from "@mui/material";
@@ -8,6 +9,7 @@ import { useGetProducts } from "../../hooks/useGetProducts";
 import { usePostNewClient } from "../../hooks/usePostNewClient";
 import { useGetClients } from "../../hooks/useGetClients";
 import { IUserResponse } from "../../types/io";
+import { useDeleteProduct } from "../../hooks/useDeleteProduct";
 
 export const Admin = () => {
   const [openNewPro, setOpenNewPro] = useState(false);
@@ -42,6 +44,9 @@ export const Admin = () => {
   const { getClients, getClientsData, getClientsErrorMessage } = useGetClients({
     enabled: false,
   });
+
+  const { deleteProduct, deleteProductResponse, deleteProductError } =
+    useDeleteProduct();
 
   const isAdminFormValid = Object.values(formValuesAdmin).every(
     (value) => value.trim() !== ""
@@ -108,29 +113,14 @@ export const Admin = () => {
   };
 
   const handleDeleteProduct = (data: { pk_id: number }) => {
-    console.log("Excluir produto com ID:", data.pk_id);
+    deleteProduct({
+      id: data.pk_id,
+    });
   };
 
   const handleDeleteAdmin = (data: { pk_id: number }) => {
     console.log("Excluir admin com ID:", data.pk_id);
   };
-
-  const mockData = Array.from({ length: 20 }, (_, i) => ({
-    pk_id: i + 1,
-    name: `Ambi ${i + 1}`,
-    description: `Esse é o ambiduwille ${i + 1}`,
-    price: 2 * i,
-    stock: i + 1,
-    image:
-      "https://i.pinimg.com/736x/13/2c/ca/132ccab00cbe2774aa975c147c584aa8.jpg",
-  }));
-
-  const mockAdmins = Array.from({ length: 10 }, (_, i) => ({
-    pk_id: i + 100,
-    name: `Admin ${i + 1}`,
-    image:
-      "https://i.pinimg.com/736x/13/2c/ca/132ccab00cbe2774aa975c147c584aa8.jpg",
-  }));
 
   useEffect(() => {
     if (postNewProductData) {
@@ -207,6 +197,25 @@ export const Admin = () => {
       setOpenListAdmins(false);
     }
   }, [getClientsErrorMessage]);
+
+  useEffect(() => {
+    if (deleteProductResponse) {
+      enqueueSnackbar("Produto excluído com sucesso!", {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
+      getProducts();
+    }
+  }, [deleteProductResponse]);
+
+  useEffect(() => {
+    if (deleteProductError) {
+      enqueueSnackbar(String(deleteProductError), {
+        variant: "error",
+        autoHideDuration: 2000,
+      });
+    }
+  }, [deleteProductError]);
   return (
     <S.Wrapper>
       <S.Container>
