@@ -1,6 +1,7 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { apiService } from "../service/apiService";
 import { useQuery } from "@tanstack/react-query";
+import { IGetProductsData } from "../types/io";
 
 export const useGetProductById = ({
   productId,
@@ -10,8 +11,8 @@ export const useGetProductById = ({
   enabled?: boolean;
 }) => {
   const { refetch, data, error, ...rest } = useQuery<
-    AxiosResponse<any>,
-    AxiosError<{ message?: string }>
+    AxiosResponse<IGetProductsData>,
+    AxiosError
   >({
     queryKey: ["/ambifericos/produtos/buscarPorID", productId],
     queryFn: () => apiService.getProductById({ id: productId }),
@@ -20,8 +21,8 @@ export const useGetProductById = ({
 
   return {
     getProductById: refetch,
-    getProductByIdData: data,
-    getProductByIdErrorMessage: error?.response?.data.message,
+    getProductByIdData: data?.data,
+    getProductByIdErrorMessage: error?.response?.data,
     getProductByIdRest: rest,
   };
 };

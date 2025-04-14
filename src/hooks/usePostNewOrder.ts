@@ -1,22 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
 import { apiService } from "../service/apiService";
+import { IPostNewOrderProps } from "../types/io";
 
 export const usePostNewOrder = () => {
   const { mutate, data, error, ...rest } = useMutation<
     AxiosResponse<any>,
-    AxiosError<{ message?: string }>,
-    {
-      body: {
-        cliente: number;
-        itens: {
-          produto: {
-            id: number;
-          };
-          quantidade: number;
-        };
-      };
-    }
+    AxiosError,
+    IPostNewOrderProps
   >({
     mutationFn: apiService.postNewOrder,
   });
@@ -24,7 +15,7 @@ export const usePostNewOrder = () => {
   return {
     postNewOrder: mutate,
     postNewOrderData: data,
-    postNewOrderErrorMessage: error?.response?.data.message,
+    postNewOrderErrorMessage: error?.response?.data,
     postNewOrderRest: rest,
   };
 };
