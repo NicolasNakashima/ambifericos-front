@@ -19,7 +19,14 @@ export default function ProductCard({
 }: IProductCard) {
   return (
     <S.Card onClick={() => onClick({ pk_id })}>
-      <S.ImageCard src={image} />
+      <S.ImageCard
+        src={image}
+        onError={(e) => {
+          const target = e.currentTarget as HTMLImageElement;
+          target.src =
+            "https://i.pinimg.com/474x/f9/86/a1/f986a135681281d4cd0deb6e4ec351fc.jpg";
+        }}
+      />
       <S.CardInformations>
         <S.ProductName>{name}</S.ProductName>
         <S.ProductPrice>R$ {price}</S.ProductPrice>

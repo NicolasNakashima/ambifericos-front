@@ -2,7 +2,7 @@ import { useState } from "react";
 import * as S from "./styles";
 
 export interface ILoginProps {
-  name: string;
+  email: string;
   password: string;
 }
 export interface IDataProps {
@@ -10,16 +10,16 @@ export interface IDataProps {
 }
 
 const LoginModal = ({ handleSubmit }: IDataProps) => {
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <S.Wrapper>
-      <S.StyledTitle>Ambiféricos - Cadastro</S.StyledTitle>
+      <S.StyledTitle>Ambiféricos - Login</S.StyledTitle>
       <S.TextFieldStyled
-        label="Digite seu usuário"
+        label="Digite seu email"
         variant="standard"
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <S.TextFieldStyled
         label="Digite sua senha"
@@ -30,7 +30,7 @@ const LoginModal = ({ handleSubmit }: IDataProps) => {
       <S.ButtonStyled
         color="inherit"
         onClick={() => {
-          handleSubmit({ name, password });
+          handleSubmit({ email, password });
         }}
       >
         Login

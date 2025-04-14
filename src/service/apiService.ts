@@ -1,8 +1,10 @@
 import axios from "axios";
 import { hydrateQueryParams } from "../functions/hidrateQueryParams";
+import { IPostAddItemShoppingCartProps, IPostNewOrderProps } from "../types/io";
 
 const api = axios.create({
-  baseURL: process.env.BACKEND_URL,
+  // baseURL: process.env.BACKEND_URL,
+  baseURL: "https://ambifericosapi.onrender.com/",
 });
 
 export const apiService = {
@@ -28,19 +30,8 @@ export const apiService = {
     api.delete(`/ambifericos/produtos/remover${hydrateQueryParams([{ id }])}`),
 
   //Pedidos
-  postNewOrder: ({
-    body,
-  }: {
-    body: {
-      cliente: number;
-      itens: {
-        produto: {
-          id: number;
-        };
-        quantidade: number;
-      };
-    };
-  }) => api.post(`/ambifericos/pedido/adicionaPedido`, body),
+  postNewOrder: (body: IPostNewOrderProps) =>
+    api.post(`/ambifericos/pedido/adicionaPedido`, body),
 
   getOrdersByClient: ({ id }: { id: number }) =>
     api.get(
@@ -118,5 +109,23 @@ export const apiService = {
   deleteAdmin: ({ id }: { id: number }) =>
     api.delete(
       `/ambifericos/adminstrador/inserir${hydrateQueryParams([{ id }])}`
+    ),
+
+  //Carrinho
+  postAddItemShoppingCart: (body: IPostAddItemShoppingCartProps) =>
+    api.post(`/ambifericos/carrinho/adicionarItem`, body),
+
+  getShoppingCartByClientId: (clienteId: number) =>
+    api.get(
+      `/ambifericos/carrinho/listarPorCliente${hydrateQueryParams([
+        {
+          clienteId,
+        },
+      ])}`
+    ),
+
+  deleteProductShoppingCart: ({ itemId }: { itemId: number }) =>
+    api.delete(
+      `/ambifericos/carrinho/removerItem${hydrateQueryParams([{ itemId }])}`
     ),
 };

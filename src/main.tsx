@@ -6,9 +6,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Login } from "./Pages/Login";
 import { Home } from "./Pages/Home";
 import { MainPage } from "./Pages/MainPage";
-import { ShoppingKart } from "./Pages/ShoppingKart";
+import { ShoppingCart } from "./Pages/ShoppingCart";
 import { SnackbarProvider } from "notistack";
 import { Produto } from "./Pages/Produto";
+import QueryProvider from "./service/queryProvider";
+import { Orders } from "./Pages/Orders";
+import { UserProvider } from "./contexts/AuthContext";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ErrorPage } from "./Pages/ErrorPage";
 import { Admin } from "./Pages/Admin";
 import { Cadastro } from "./Pages/Cadastro";
 
@@ -16,19 +21,28 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainPage />,
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
         element: <Home />,
       },
       {
-        path: "/carrinho",
-        element: <ShoppingKart />,
-      },
-      {
-        path: "/produto/:id",
-        element: <Produto />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/carrinho",
+            element: <ShoppingCart />,
+          },
+          {
+            path: "/produto/:id",
+            element: <Produto />,
+          },
+          {
+            path: "/meus-pedidos",
+            element: <Orders />,
+          },
+        ],
       },
       {
         path: "/admin",
@@ -38,7 +52,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     element: <Login />,
   },
   {
@@ -50,8 +64,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <SnackbarProvider>
-      <RouterProvider router={router} />
-    </SnackbarProvider>
+    <QueryProvider>
+      <UserProvider>
+        <SnackbarProvider>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </UserProvider>
+    </QueryProvider>
   </StrictMode>
 );

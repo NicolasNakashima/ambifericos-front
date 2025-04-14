@@ -30,7 +30,7 @@ export const useGetClientByEmailAndPassword = ({
 
   return {
     getClientByEmailAndPassword: refetch,
-    getClientByEmailAndPasswordData: data,
+    getClientByEmailAndPasswordData: data?.data,
     getClientByEmailAndPasswordErrorMessage: error?.response?.data.message,
     getClientByEmailAndPasswordRest: rest,
   };
