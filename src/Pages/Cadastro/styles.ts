@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
- 
+
 export const Wrapper = styled.div(
-  () => css`
+    () => css`
     padding: 0;
     margin: 0;
     width: 100%;
@@ -9,11 +9,8 @@ export const Wrapper = styled.div(
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgb(250,197,82);
-background: linear-gradient(90deg,
-     rgba(250,197,82,1) 0%,
-      rgba(255,193,0,1) 50%,
-       rgba(252,138,43,1) 100%);
+    background: #4eb0e6;
+background: linear-gradient(90deg,rgba(78, 176, 230, 1) 0%, rgba(92, 250, 255, 1) 50%, rgba(196, 245, 210, 1) 100%);
     
   `
 );

@@ -30,13 +30,8 @@ export const ButtonStyled = styled(Button)(
     () => css`
     width: 90%;
     margin-top: 2rem;
-    background: rgba(0, 123, 255, 1);
-    background: linear-gradient(
-      90deg,
-      rgba(0, 123, 255, 1) 0%,       
-      rgba(0, 86, 179, 1) 50%,       
-      rgba(0, 68, 136, 1) 100%       
-    );
+    background: #4eb0e6;
+background: linear-gradient(90deg, rgba(78, 176, 230, 1) 0%, rgba(92, 250, 255, 1) 100%, rgba(120, 249, 243, 1) 63%, rgba(196, 245, 210, 1) 100%);
   `
 );
 
